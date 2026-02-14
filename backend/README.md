@@ -325,7 +325,7 @@ supabase/
    - Configure the following settings:
      - **Name**: `hms-backend`
      - **Runtime**: `Node`
-     - **Build Command**: `npm install --include=dev` (IMPORTANT: includes TypeScript types!)
+     - **Build Command**: `npm install --include=dev && npm run build` (CRITICAL: Install dev deps for TypeScript!)
      - **Start Command**: `node dist/server.js`
      - **Plan**: `Free` (or paid as needed)
 
