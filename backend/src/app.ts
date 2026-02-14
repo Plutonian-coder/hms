@@ -1,7 +1,7 @@
 // ============================================================
 // Express Application Setup
 // ============================================================
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 // ---- Health Check ----
-app.get('/api/health', (_req, res) => {
+app.get('/api/health', (_req: Request, res: Response) => {
     res.json({
         success: true,
         data: {
@@ -47,7 +47,7 @@ app.use('/api/warden', wardenRoutes);
 app.use('/api/public', publicRoutes);
 
 // ---- 404 Handler ----
-app.use((_req, res) => {
+app.use((_req: Request, res: Response) => {
     res.status(404).json({
         success: false,
         error: {

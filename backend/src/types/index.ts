@@ -200,6 +200,7 @@ export interface AuthenticatedRequest extends Request {
         profile: Profile;
         accessToken: string;
     };
+    file?: Express.Multer.File;
 }
 
 // ---------- API Responses ----------

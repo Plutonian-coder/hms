@@ -1,7 +1,7 @@
 // ============================================================
 // Student Routes — Exactly 4 task-oriented endpoints
 // ============================================================
-import { Router } from 'express';
+import { Router, Request, Express } from 'express';
 import multer from 'multer';
 import { studentController } from './student.controller';
 import { authMiddleware } from '../../middleware/auth.middleware';
@@ -13,7 +13,7 @@ const router = Router();
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
-    fileFilter: (_req, file, cb) => {
+    fileFilter: (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
         const allowed = ['image/jpeg', 'image/png', 'application/pdf'];
         if (allowed.includes(file.mimetype)) {
             cb(null, true);
