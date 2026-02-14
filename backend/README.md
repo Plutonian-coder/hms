@@ -300,3 +300,58 @@ supabase/
 └── rls/
     └── rls_policies.sql        # Row Level Security
 ```
+
+---
+
+## Deploying to Render
+
+### Prerequisites
+- A [Render](https://render.com) account
+- A [Supabase](https://supabase.com) project with the database migrations run
+
+### Deploy Steps
+
+1. **Push your code to GitHub**
+   ```bash
+   git add .
+   git commit -m "Fix deployment configuration"
+   git push origin main
+   ```
+
+2. **Create a Web Service on Render**
+   - Go to [Render Dashboard](https://dashboard.render.com)
+   - Click "New" → "Web Service"
+   - Connect your GitHub repository
+   - Configure the following settings:
+     - **Name**: `hms-backend`
+     - **Runtime**: `Node`
+     - **Build Command**: `npm install`
+     - **Start Command**: `npm run start`
+     - **Plan**: `Free` (or paid as needed)
+
+3. **Set Environment Variables**
+   In the Render dashboard, add these environment variables:
+   ```
+   NODE_ENV=production
+   PORT=4000
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   JWT_SECRET=your_secure_jwt_secret
+   ```
+
+4. **Deploy**
+   - Click "Create Web Service"
+   - Wait for the build to complete (it will run `npm install` and then `npm run build` via the `postinstall` script)
+
+### Troubleshooting
+
+If the build fails with TypeScript errors like "Cannot find module 'express'":
+
+1. Make sure your `package.json` includes `@types/express` in `devDependencies`
+2. Ensure the build command runs `npm install` (not `npm ci --only=production`)
+3. The `postinstall` script ensures TypeScript compiles after dependencies install
+
+If you see "Cannot find name 'process'":
+- Install `@types/node` in devDependencies (already included in this project)
+```
